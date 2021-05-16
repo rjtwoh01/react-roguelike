@@ -15,6 +15,9 @@ const ReactRogue: React.FC<ReactRogueInterface> = (props: ReactRogueInterface) =
     const canvasHeight = props.height * props.tileSize;
     let inputManager = new InputManager({});
 
+    //Receives action and data from Input manager
+    //For the move action, take the vector data and pass it to player move
+    //Update the player position on the canvas
     const handleInput = (action: any, data: any) => {
         console.log(`handle input: ${action}:${JSON.stringify(data)}`);
         let newPlayer = new Player({x: player.x, y: player.y, size: player.size});
