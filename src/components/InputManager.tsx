@@ -12,12 +12,15 @@ class InputManager extends React.Component {
         this.observers = this.observers.filter(subscriber => subscriber !== fn);
     }
 
+    //broadcast will trigger the function call for each observer of InputManager
+    //Each of the observers have their own function to handle the action and data
     broadcast(action: any, data: any) {
          this.observers.forEach(subscriber => {
              subscriber(action, data);
          });
     }
 
+    //handleKeys will capture key events and "broadcast" them to each function that subscribes to the input manager
     handleKeys = (e: KeyboardEvent) => {
         e.preventDefault();
         switch (e.code) {
