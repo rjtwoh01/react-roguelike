@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactRogue from './ReactRogue';
+import ReactRogue from './components/ReactRogue';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
