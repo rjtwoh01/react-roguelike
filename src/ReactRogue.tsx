@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import InputManager from './InputManager';
+import Player from './Player';
 
 export interface ReactRogueInterface {
     width: number;
@@ -9,16 +10,15 @@ export interface ReactRogueInterface {
 
 const ReactRogue: React.FC<ReactRogueInterface> = (props: ReactRogueInterface) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [player, setPlayer] = useState({x: 64, y:128});
+    const [player, setPlayer] = useState(new Player({x: 1, y: 2, size: props.tileSize}));
     const canvasWidth = props.width * props.tileSize;
     const canvasHeight = props.height * props.tileSize;
     let inputManager = new InputManager({});
 
     const handleInput = (action: any, data: any) => {
         console.log(`handle input: ${action}:${JSON.stringify(data)}`);
-        let newPlayer = {...player}; //shallow copy of player
-        newPlayer.x += (data.x * props.tileSize);
-        newPlayer.y += (data.y * props.tileSize);
+        let newPlayer = new Player({x: player.x, y: player.y, size: player.size});
+        newPlayer.move(data.x, data.y);
         setPlayer(newPlayer);
     }
 
@@ -39,8 +39,7 @@ const ReactRogue: React.FC<ReactRogueInterface> = (props: ReactRogueInterface) =
         const ctx = null != canvasRef.current ? canvasRef.current.getContext('2d') : null;
         if (ctx !== null) {
             ctx.clearRect(0,0, canvasWidth, canvasHeight);
-            ctx.fillStyle = "#000"
-            ctx.fillRect(player.x, player.y, 16, 16);
+            player.draw(ctx)
         }
     })
     
